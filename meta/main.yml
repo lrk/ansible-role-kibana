@@ -1,0 +1,21 @@
+galaxy_info:
+  author: lrk
+  description: "An Ansible Role that install Kibana."
+  license: "Apache License Version 2.0"
+  min_ansible_version: 2.2
+
+  platforms:
+    - name: EL
+      versions:
+      - 7
+      
+  galaxy_tags:
+    - web
+    - elk
+    - kibana
+    - system
+    - monitoring
+    - logs
+    - metrics
+
+dependencies: []

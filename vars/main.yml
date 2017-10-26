@@ -1,2 +1,4 @@
 ---
 # vars file for ansible-role-kibana/
+__elasticsearch_gpg_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+__kibana_repository_baseurl_redhat: "https://artifacts.elastic.co/packages/{{ kibana_version }}/yum"

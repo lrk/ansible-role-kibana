@@ -1,2 +1,24 @@
 ---
 # tasks file for ansible-role-kibana/
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: "Ensure Kibana is installed"
+  package:
+    name: kibana
+    state: present
+
+- name: "Ensure Kibana is started and enabled at boot."
+  service:
+    name: kibana
+    state: started
+    enabled: yes
+
+- name: "Ensure Kibana is configured."
+  template:
+    src: kibana.yml.j2
+    dest: "/opt/kibana/config/kibana.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: "restart kibana"

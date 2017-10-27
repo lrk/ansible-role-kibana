@@ -1,0 +1,13 @@
+---
+- name: "Ensure Elasticsearch GPG Key is installed"
+  rpm_key:
+    key: "{{ __elasticsearch_gpg_key }}"
+    state: present
+
+- name: "Ensure Kibana repository is installed"
+  yum_repository:
+    name: "kibana"
+    description: "Kibana repository for {{ kibana_version }} packages"
+    baseurl: "{{ __kibana_repository_baseurl_redhat }}"
+    gpgcheck: yes
+    gpgkey: "{{ __elasticsearch_gpg_key }}"

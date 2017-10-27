@@ -38,16 +38,12 @@
   become: yes
   when: kibana_systemd_service.stat.exists
 
-- name: "Ensure systemd reloaded"
-  systemd:
-    daemon_reload: yes
-  when: kibana_systemd_service.changed
-
 - name: "Ensure Kibana is started and enabled at boot."
   service:
     name: kibana
     state: started
     enabled: yes
+    daemon_reload: "{{ kibana_systemd_service.changed }}"
 
 - name: "Ensure Kibana is configured."
   template:

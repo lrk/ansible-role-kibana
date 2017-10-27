@@ -1,6 +1,7 @@
 Ansible Role: Kibana ([lrk.kibana](https://galaxy.ansible.com/lrk/kibana/))
 =========
 [![Build Status](https://travis-ci.org/lrk/ansible-role-kibana.svg?branch=master)](https://travis-ci.org/lrk/ansible-role-kibana)
+
 An Ansible Role that install [Kibana](https://www.elastic.co/products/kibana).
 
 Supported OSes

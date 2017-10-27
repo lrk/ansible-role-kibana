@@ -8,14 +8,40 @@
     name: kibana
     state: present
 
-- name: "Ensure Kibana PID exists"
-  become: true
-  file:
-    path: "{{ kibana_pid_file }}"
-    state: file
-    owner: "{{ __kibana_user }}"
-    group: "{{ __kibana_group }}"
-    mode: "u=rw,g=r,o="
+- name: "Check if kibana use initd"
+  stat:
+    path: /etc/init.d/kibana
+  register: kibana_etc_initd
+
+- name: "Check if kibana use systemd"
+  stat:
+    path: /etc/systemd/system/kibana.service
+  register: kibana_systemd_service
+
+- name: "Update Kibana initd service unit"
+  lineinfile:
+    dest: /etc/init.d/kibana
+    line: '  touch $pidfile && chown $user:$group $pidfile'
+    insertafter: '^\s*# Setup any environmental stuff beforehand$'
+  become: yes
+  when: kibana_etc_initd.stat.exists
+
+- name: "Update Kibana systemd service unit"
+  blockinfile:
+    dest: /etc/systemd/system/kibana.service
+    block: |
+      PermissionsStartOnly=true
+      ExecStartPre=/bin/touch {{ kibana_pid_file }}
+      ExecStartPre=/bin/chown {{ __kibana_user }}:{{ __kibana_group }} {{ kibana_pid_file }}
+    insertafter: '^\[Service\]'
+  register: kibana_systemd_service
+  become: yes
+  when: kibana_systemd_service.stat.exists
+
+- name: "Ensure systemd reloaded"
+  systemd:
+    daemon_reload: yes
+  when: kibana_systemd_service.changed
 
 - name: "Ensure Kibana is started and enabled at boot."
   service:
@@ -27,6 +53,7 @@
   template:
     src: kibana.yml.j2
     dest: "/etc/kibana/kibana.yml"
+    force: yes
     owner: "{{ __kibana_user }}"
     group: "{{ __kibana_group }}"
     mode: "u=rw,g=r,o="

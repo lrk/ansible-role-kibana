@@ -2,5 +2,7 @@
 - hosts: localhost
   remote_user: root
   become: true
+  vars:
+    - kibana_server_host: "0.0.0.0"
   roles:
     - ansible-kibana

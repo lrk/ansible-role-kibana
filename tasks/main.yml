@@ -8,6 +8,15 @@
     name: kibana
     state: present
 
+- name: "Ensure Kibana PID exists"
+  become: true
+  file:
+    path: "{{ kibana_pid_file }}"
+    state: touch
+    owner: "{{ __kibana_user }}"
+    group: "{{ __kibana_group }}"
+    mode: "u=rw,g=r,o="
+
 - name: "Ensure Kibana is started and enabled at boot."
   service:
     name: kibana
@@ -17,8 +26,8 @@
 - name: "Ensure Kibana is configured."
   template:
     src: kibana.yml.j2
-    dest: "/opt/kibana/config/kibana.yml"
-    owner: root
-    group: root
-    mode: 0644
+    dest: "/etc/kibana/kibana.yml"
+    owner: "{{ __kibana_user }}"
+    group: "{{ __kibana_group }}"
+    mode: "u=rw,g=r,o="
   notify: "restart kibana"

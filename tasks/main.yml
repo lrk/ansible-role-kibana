@@ -12,7 +12,7 @@
   become: true
   file:
     path: "{{ kibana_pid_file }}"
-    state: present
+    state: file
     owner: "{{ __kibana_user }}"
     group: "{{ __kibana_group }}"
     mode: "u=rw,g=r,o="

@@ -1,6 +1,9 @@
 Ansible Role: Kibana ([lrk.kibana](https://galaxy.ansible.com/lrk/kibana/))
 =========
 [![Build Status](https://travis-ci.org/lrk/ansible-role-kibana.svg?branch=master)](https://travis-ci.org/lrk/ansible-role-kibana)
+[![Galaxy](https://img.shields.io/badge/galaxy-lrk.kibana-blue.svg)](https://galaxy.ansible.com/lrk/kibana)
+![Ansible](https://img.shields.io/ansible/role/d/21513.svg)
+![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F21513%2F&query=$.min_ansible_version)
 
 An Ansible Role that install [Kibana](https://www.elastic.co/products/kibana).
 
